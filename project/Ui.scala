@@ -14,18 +14,18 @@ object Ui {
   lazy val ui: TaskKey[File] = taskKey[File]("Download ui or return cached")
 
   lazy val settings = Seq(
-    uiUrl := { (s: String) => s"https://github.com/Hydrospheredata/mist-ui/releases/download/v$s/mist-ui-$s.tar.gz" },
-    uiVersion := "2.2.1",
+    uiUrl := { (s: String) => s"https://github.com/itsbigspark/management-ui/releases/download/$s/bigspark-ui-$s.tar.gz" },
+    uiVersion := "0.1",
     uiCheckoutDir := "ui_local",
     ui := {
       val local = baseDirectory.value / uiCheckoutDir.value
       if (!local.exists()) IO.createDirectory(local)
 
       val v = uiVersion.value
-      val target = local / s"ui-$v"
+      val target = local / s"bigspark-ui-$v"
       if (!target.exists()) {
         val link = uiUrl.value(v)
-        val targetF = local/ s"ui-$v.tar.gz"
+        val targetF = local/ s"bigspark-ui-$v.tar.gz"
         Downloader.download(link, targetF)
         Tar.extractTarGz(targetF, target)
       }
